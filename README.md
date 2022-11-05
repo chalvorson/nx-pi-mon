@@ -27,6 +27,14 @@ Check if the data flow has stopped for more than 3 minutes and push the result t
                     ie. Testing mode.
 ```
 
+## NetXMS DCI Config
+NetXMS pushed metrics are the easiest to setup.  Using the NetXMS Management Console, create a new DCI parameter with Origin: Push.  Choose an appropriate Display name and Data Type.  Then, for the Metric field, enter the parameter name that nx-pi-mon will push to the server.  
+More precisely...
+ - If you use the -p/--param switch and specify a parameter name, then set the Metric to the same parameter name.  
+ - If you don't use the -p/--param switch, the default is to use the PI Tag name as the parameter name - so, enter the tag name in the Metric.
+
+I haven't tested this out, but I believe that some PI Tag names won't be valid NetXMS DCI parameter names.  Which is why the -p/--param switch exists.
+
 ## Returns:
 - Stale checking mode: *(-s is specified)*
   - Pushes True to the NetXMS server when the given PI tag has more than one unique data point in the given time span.  Otherwise, it returns false.
@@ -36,6 +44,7 @@ Check if the data flow has stopped for more than 3 minutes and push the result t
 ## Dependencies:
 - [PIconnect](https://github.com/Hugovdberg/PIconnect): Tested with 0.9.1  *([pip install PIconnect](https://pypi.org/project/PIconnect/))*
 - [PI AF SDK](https://osisoft.com): Tested with 2.10.9.253
+- [NetXMS](https://netxms.org): Tested with 4.1.420+
 
 ## Known Issues:
-*I have run into what seems like a .NET issue that I have yet to solve.  It may also be a PI AF SDK version issue.*
+*I have run into what seems like a .NET issue that I have yet to solve.  It could stem from the PIconnect library which uses a Python to .NET adapter.  Or, it may also be a PI AF SDK version issue.*
